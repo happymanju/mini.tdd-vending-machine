@@ -7,76 +7,57 @@ describe("vending machine", () => {
     expect(typeof machine.insertCoin).to.equal("function");
   });
 
-  it("should have a beginning balance of 0 and till should be initialized to 10 for all coins", () => {
-    const machine = new VendingMachine();
-    expect(machine.balance).to.equal(0);
-    expect(machine.till[10]).to.equal(10);
-    expect(machine.till[50]).to.equal(10);
-    expect(machine.till[100]).to.equal(10);
-    expect(machine.till[500]).to.equal(10);
-  });
+  it("should have a drink inventory"()=>{})
 
-  it("should have a method for selecting a row", () => {
+  it("should have a selectRow method", ()=>{
     const machine = new VendingMachine();
     expect(typeof machine.selectRow).to.equal("function");
-  });
+  })
 
-  it("should return the correct row using selectRow", () => {
-    const machine = new VendingMachine();
-    const row = machine.selectRow(2);
-    expect(row).to.equal(1);
-  });
+  it("should have a selectColumn", ()=>{
+    const machine = VendingMachine();
+    expect(typeof machine.selectColumn).to.equal("function")
+  })
 
-  it("should have a method for selecting a column", () => {
-    const machine = new VendingMachine();
-    expect(typeof machine.selectColumn).to.equal("function");
-  });
+  it("should have a starting balance", ()=>{
+    const machine = VendingMachine();
 
-  it("should return the correct column using selectColumn", () => {
-    const machine = new VendingMachine();
-    machine.selectColumn("A");
-    expect(machine.column).to.equal("A");
-  });
-
-  it("should return correct drink and correct balance if the balance is sufficient", () => {
-    const machine = new VendingMachine();
-    machine.insertCoin(100);
-    machine.selectRow(1);
-    expect(machine.selectColumn("A")).to.equal("cola");
     expect(machine.balance).to.equal(0);
-    expect(machine.inventory["cola"]).to.equal(9);
-  });
+  })
 
-  it("should have the correct till after transaction and changeReturn", () => {
+  it("should have a starting till, with >0 coin stocks", ()=>{
+    const machine = VendingMachine();
+
+    const idealCoinStocks = [10,10,10,10];
+    const actualCoinStocks = [];
+
+    for(let coinKey of Object.keys(machine.till)){
+      actualCoinStocks.push(machine.till[coinKey])
+    }
+
+    expect(machine.till).to.be.true;
+    expect(actualCoinStocks).to.equal(idealCoinStocks);
+  })
+
+  it("should have a changeReturn method", ()=>{
     const machine = new VendingMachine();
-    machine.insertCoin(500);
-    machine.selectRow(3);
-    machine.selectColumn("B");
-    machine.changeReturn();
-    let correctTill =
-      machine.till[10] === 9 &&
-      machine.till[50] === 10 &&
-      machine.till[100] === 7 &&
-      machine.till[500] === 11;
-    expect(correctTill).to.equal(true);
-    expect(machine.balance).to.equal(0);
-  });
+    expect(typeof machine.changeReturn).to.be('function')
+  })
 
-  it("should reset the balance to zero using change return", () => {
-    const machine = new VendingMachine();
-    machine.insertCoin(500);
-    machine.changeReturn();
-    expect(machine.balance).to.equal(0);
-  });
+  it("should changeReturn after a successful transaction, with leftover balance", ()=>{})
 
-  it("should have correct till balance after transaction", () => {
-    const machine = new VendingMachine();
+  it("should return an error with insufficient balance", ()=>{})
 
-    machine.insertCoin(100);
-    machine.insertCoin(100);
-    machine.changeReturn();
-    expect(machine.till[100]).to.equal(10);
-  });
+  it("should return an error if a drink is sold-out", ()=>{})
+
+  it("should return a drink if balance and inventory are sufficient", ()=>{})
+
+  it("should decrement drink inventory on successful transaction", ()=>{})
+
+
+
+
+
 
   it("should accept valid coins", () => {
     // Setup

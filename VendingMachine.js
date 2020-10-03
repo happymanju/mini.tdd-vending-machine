@@ -1,51 +1,37 @@
 // your class here
 
+
+//drinks are loaded in test.js
 class VendingMachine {
   constructor() {
     this.balance = 0;
-    this.till = { 10: 10, 50: 10, 100: 10, 500: 10 };
-    this.drinks = {
-      A: ["cola", "pepsi", "fanta", "sprite"],
-      B: ["monster", "redbull", "rockstar", "charge"],
-      C: ["kirin", "sapporo", "asahi", "yebisu"],
-      D: ["gin", "vodka", "whiskey", "tequila"],
-    };
-    this.price = {
-      cola: 100,
-      pepsi: 100,
-      fanta: 100,
-      sprite: 100,
-      monster: 170,
-      redbull: 170,
-      rockstar: 190,
-      charge: 210,
-      kirin: 230,
-      sapporo: 250,
-      asahi: 10,
-      yebisu: 270,
-      gin: 530,
-      vodka: 470,
-      whiskey: 410,
-      tequila: 420,
-    };
+    this.till = { 10: 100, 50: 100, 100: 100, 500: 100 };
+    this.cola = {name : "cola", price : 100, stock : 10};
+    this.lemonade = {name : "lemonade", price : 110, stock : 10};
+    this.orangeJuice = {name : "orange juice", price : 120, stock : 10};
+    this.coffee = {name : "michael coffee", price : 150, stock : 10};
+    this.greenTea = {name : "ryoku-cha", price : 130, stock : 10};
+    this.asahi = {name : "asahi beer", price : 220, stock : 10};
+    this.sapporo = {name : "sapporo beer", price : 220, stock : 10};
+    this.kirin = {name : "kirin beer", price : 230, stock : 10};
+    this.yebisu = {name : "yebisu beer", price : 290, stock : 10};
+    this.cocoa = {name : "Van Michael's Cocoa", price : 570, stock : 10};
+    this.peachTea = {name : "peach tea", price : 110, stock : 10};
+    this.oolongTea = {name : "oolong tea", price : 100, stock : 10};
+    this.blackTea = {name : "black tea", price : 100, stock : 10};
+    this.ambrosia = {name : "drink of the ancient greek gods", price : 990, stock : 10};
+    this.mystery = {name : "is this a drink??", price : 50, stock : 10};
+    this.cupNoodle = {name : "spicy noodle cup", price : 100, stock : 10};
+
     this.inventory = {
-      cola: 10,
-      pepsi: 10,
-      fanta: 10,
-      sprite: 10,
-      monster: 10,
-      redbull: 10,
-      rockstar: 10,
-      charge: 10,
-      kirin: 10,
-      sapporo: 10,
-      asahi: 10,
-      yebisu: 10,
-      gin: 10,
-      vodka: 10,
-      whiskey: 10,
-      tequila: 10,
-    };
+      A : [];
+      B : [];
+      C : [];
+      D : [];
+    }
+    
+
+    
   }
   insertCoin(coin) {
     for (const property in this.till) {
@@ -58,26 +44,32 @@ class VendingMachine {
 
   selectRow(rowNumber) {
     this.row = rowNumber - 1;
-    console.log(this.row);
     return this.row;
   }
 
-  selectColumn(columnNumber) {
-    this.column = columnNumber;
-    if (this.row !== undefined) {
-      let product = this.drinks[this.column][this.row];
-      let price = this.price[product];
-      if (this.balance >= price) {
-        console.log(`Row:${this.row}; Column:${this.column}`);
-        console.log(`Here is your ${product}`);
-        this.balance -= price; //reduce balance
-        this.inventory[this.drinks[this.column][this.row]] -= 1; //reduce inventory
-        return product;
-      } else {
-        return "insufficient balance!";
+  selectColumn(columnLetter) {
+    this.column = columnLetter;
+    return this.column
+  }
+
+  dispense() {
+    if (this.row && this.column) {
+      if (this.inventory[this.column][this.row].price > this.balance) {
+        return "insufficient balance";
+      } else if (this.inventory[this.column][this.row] === 0) {
+          return "sold out";
+        } else {
+          const drink = this.inventory[this.column][this.row];
+          console.log(`Here is your ${drink.name}`);
+          drink.stock -= 1;
+          this.balance -= drink.price;
+          if (this.balance > 0) {
+            changeReturn();
+          }
+          return drink;
+        }
       }
     }
-    console.log(`you selected ${this.column}`);
   }
 
   changeReturn() {
@@ -91,7 +83,20 @@ class VendingMachine {
     }
     console.log(this.till);
   }
+
+  stockDrink(drinkName, setPrice, newAmount){
+    for (let column in this.inventory){
+      if (this.inventory[column].length >= 4) {
+        continue;
+      }
+      this.inventory[column].push({name : drinkName, price : setPrice, stock : newAmount});
+      return;
+    }
+    return;
+
+  }
 }
+
 
 /*
   >>> Don't forget to use module.exports!
