@@ -40,7 +40,22 @@ class VendingMachine {
   }
 
   dispense() {
+    if (this.row === undefined || this.column === undefined) {
+      console.log(typeof this.row, typeof this.column);
+      return "please select a row and/or column";
+    }
+
     const drink = this.inventory[this.column][this.row];
+
+    if (this.balance < drink.price) {
+      return "insufficient balance";
+    } else if (drink.stock <= 0) {
+      return "selected item is sold-out";
+    } else {
+      drink.stock -= 1;
+    }
+    this.changeReturn();
+
     return drink;
   }
 
@@ -55,23 +70,27 @@ class VendingMachine {
       if (balance >= 500) {
         change[500] += 1;
         balance -= 500;
-        returnCoin(balance);
       } else if (balance >= 100) {
         change[100] += 1;
         balance -= 100;
-        returnCoin(balance);
       } else if (balance >= 50) {
         change[50] += 1;
         balance -= 50;
-        returnCoin(balance);
       } else if (balance < 50) {
         change[10] += 1;
         balance -= 10;
+      }
+      if (balance > 0) {
         returnCoin(balance);
       }
       return;
     }
     returnCoin(balance);
+    console.log("here is your change: ");
+
+    for (let coin in change) {
+      console.log(`${coin} : ${change[coin]}`);
+    }
     return change;
   }
 
