@@ -60,18 +60,14 @@ class VendingMachine {
   }
 
   changeReturn() {
-    let coinlist = [];
-    for (let coinType in this.till) {
-      coinlist.push(Number(coinType));
-    }
-    let change = {};
+    let change = { 500: 0, 100: 0, 50: 0, 10: 0 };
     let balance = this.balance;
     function returnCoin(balance) {
       if (balance >= 500) {
         change[500] += 1;
         balance -= 500;
       } else if (balance >= 100) {
-        change[100] += 1;
+        change[100];
         balance -= 100;
       } else if (balance >= 50) {
         change[50] += 1;

@@ -45,15 +45,23 @@ describe("vending machine", () => {
     expect(typeof machine.changeReturn).to.equal("function");
   });
 
-  /*
-  it("should return an error with insufficient balance", ()=>{})
+  it("should return a drink object with a sufficient balance", () => {
+    const machine = new VendingMachine();
+    machine.insertCoin(500);
+    machine.selectRow(1);
+    machine.selectColumn("A");
+    const drink = machine.dispense();
+    expect(drink.name).to.equal("cola");
+  });
 
-  it("should return an error if a drink is sold-out", ()=>{})
-
-  it("should return a drink if balance and inventory are sufficient", ()=>{})
-
-  it("should decrement drink inventory on successful transaction", ()=>{})
-*/
+  it("should return the correct change", () => {
+    const machine = new VendingMachine();
+    machine.insertCoin(500);
+    machine.balance -= 100;
+    let change = machine.changeReturn();
+    const expectedChange = { 500: 0, 100: 4, 50: 0, 10: 0 };
+    expect(change).to.deep.equal(expectedChange);
+  });
 
   it("should accept valid coins", () => {
     // Setup
