@@ -7,45 +7,45 @@ describe("vending machine", () => {
     expect(typeof machine.insertCoin).to.equal("function");
   });
 
-  it("should have a drink inventory"()=>{})
+  it("should have a drink inventory", () => {
+    const machine = new VendingMachine();
+    expect(typeof machine.inventory["A"][0]).to.equal("object");
+  });
 
-  it("should have a selectRow method", ()=>{
+  it("should have a selectRow method", () => {
     const machine = new VendingMachine();
     expect(typeof machine.selectRow).to.equal("function");
-  })
+  });
 
-  it("should have a selectColumn", ()=>{
-    const machine = VendingMachine();
-    expect(typeof machine.selectColumn).to.equal("function")
-  })
+  it("should have a selectColumn method", () => {
+    const machine = new VendingMachine();
+    expect(typeof machine.selectColumn).to.equal("function");
+  });
 
-  it("should have a starting balance", ()=>{
-    const machine = VendingMachine();
+  it("should have a starting balance", () => {
+    const machine = new VendingMachine();
 
     expect(machine.balance).to.equal(0);
-  })
+  });
 
-  it("should have a starting till, with >0 coin stocks", ()=>{
-    const machine = VendingMachine();
+  it("should have a starting till, with >0 coin stocks", () => {
+    const machine = new VendingMachine();
 
-    const idealCoinStocks = [10,10,10,10];
+    const idealCoinStocks = [100, 100, 100, 100];
     const actualCoinStocks = [];
 
-    for(let coinKey of Object.keys(machine.till)){
-      actualCoinStocks.push(machine.till[coinKey])
+    for (let coinKey of Object.keys(machine.till)) {
+      actualCoinStocks.push(machine.till[coinKey]);
     }
+    expect(actualCoinStocks).to.deep.equal(idealCoinStocks);
+  });
 
-    expect(machine.till).to.be.true;
-    expect(actualCoinStocks).to.equal(idealCoinStocks);
-  })
-
-  it("should have a changeReturn method", ()=>{
+  it("should have a changeReturn method", () => {
     const machine = new VendingMachine();
-    expect(typeof machine.changeReturn).to.be('function')
-  })
+    expect(typeof machine.changeReturn).to.equal("function");
+  });
 
-  it("should changeReturn after a successful transaction, with leftover balance", ()=>{})
-
+  /*
   it("should return an error with insufficient balance", ()=>{})
 
   it("should return an error if a drink is sold-out", ()=>{})
@@ -53,11 +53,7 @@ describe("vending machine", () => {
   it("should return a drink if balance and inventory are sufficient", ()=>{})
 
   it("should decrement drink inventory on successful transaction", ()=>{})
-
-
-
-
-
+*/
 
   it("should accept valid coins", () => {
     // Setup
@@ -68,10 +64,10 @@ describe("vending machine", () => {
 
     // Assert
     expect(machine.till).to.deep.equal({
-      10: 10,
-      50: 10,
-      100: 10,
-      500: 11,
+      10: 100,
+      50: 100,
+      100: 100,
+      500: 101,
     });
     expect(machine.balance).to.equal(500); // Use an ES6 getter
   });
